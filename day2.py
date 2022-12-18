@@ -1,47 +1,39 @@
 import sys
 from aocd import get_data
 
-
-def get_values():
-    rock = 1
-    paper = 2
-    scissors = 3
-    win = 6
-    draw = 3
-
-    return rock, paper, scissors, win, draw
+# Point designations
+ROCK = 1
+PAPER = 2
+SCISSORS = 3
+WIN = 6
+DRAW = 3
 
 
 def game1(their_play, your_play):
     """Takes in two strings, one for their play, one for your play
     Returns an integer of your score"""
-    r, p, s, w, d = get_values()
     your_score = 0
 
     if your_play == 'X':
-        your_score += r
+        your_score += ROCK
         if their_play == 'A':
-            your_score += d
+            your_score += DRAW
         elif their_play == 'C':
-            your_score += w
+            your_score += WIN
 
     elif your_play == 'Y':
-        your_score += p
+        your_score += PAPER
         if their_play == 'B':
-            your_score += d
+            your_score += DRAW
         elif their_play == 'A':
-            your_score += w
+            your_score += WIN
 
     elif your_play == 'Z':
-        your_score += s
+        your_score += SCISSORS
         if their_play == 'C':
-            your_score += d
+            your_score += DRAW
         elif their_play == 'B':
-            your_score += w
-
-    else:
-        print(f'{their_play} is not a valid entry. Exiting...')
-        exit()
+            your_score += WIN
 
     return your_score
 
@@ -49,36 +41,31 @@ def game1(their_play, your_play):
 def game2(their_play, your_play):
     """Takes in two strings, one for their play, one for your play
     Returns an integer of your score"""
-    r, p, s, w, d = get_values()
     your_score = 0
 
     if their_play == 'A':
         if your_play == 'X':
-            your_score += s
+            your_score += SCISSORS
         elif your_play == 'Y':
-            your_score += d + r
+            your_score += DRAW + ROCK
         elif your_play == 'Z':
-            your_score += w + p
+            your_score += WIN + PAPER
 
     elif their_play == 'B':
         if your_play == 'X':
-            your_score += r
+            your_score += ROCK
         elif your_play == 'Y':
-            your_score += d + p
+            your_score += DRAW + PAPER
         elif your_play == 'Z':
-            your_score += w + s
+            your_score += WIN + SCISSORS
 
     elif their_play == 'C':
         if your_play == 'X':
-            your_score += p
+            your_score += PAPER
         elif your_play == 'Y':
-            your_score += d + s
+            your_score += DRAW + SCISSORS
         elif your_play == 'Z':
-            your_score += w + r
-
-    else:
-        print(f'{their_play} is not a valid entry. Exiting...')
-        exit()
+            your_score += WIN + ROCK
 
     return your_score
 
@@ -89,6 +76,12 @@ def play_round(game_round, game_part):
     """
     their_play = game_round[0]
     your_play = game_round[2]
+
+    if their_play not in ['A', 'B', 'C'] or your_play not in ['X', 'Y', 'Z']:
+        print('An unexpected play was entered.')
+        print(f"Their play must be one of 'A', 'B', 'C'. Their play was {their_play}.")
+        print(f"Your play must be one of 'X', 'Y', 'Z'. Their play was {your_play}.")
+        sys.exit()
 
     if game_part == 1:
         your_score = game1(their_play, your_play)
