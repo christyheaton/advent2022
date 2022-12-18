@@ -1,19 +1,4 @@
-import sys
-
-
-def get_input_data(file):
-    """Takes in a file, returns its contents as a list
-    If the file is not found, a test list is returned"""
-    try:
-        with open(file) as f:
-            lines = f.readlines()
-        return lines
-    except FileNotFoundError:
-        print('File not found. Using backup testing input.')
-        return ['1000', '2000', '3000', '', '4000', '', '5000', '6000', '', '7000', '8000', '9000', '', '10000']
-    except Exception as e:
-        print(f'An unexpected error occurred: {e}')
-        sys.exit()
+from aocd import get_data
 
 
 def get_total_per_elf(elf_calorie_list):
@@ -22,7 +7,7 @@ def get_total_per_elf(elf_calorie_list):
     count = 0
     cal_str = '|'.join(elf_calorie_list)
     for i in cal_str.split('|'):
-        if i.replace('\n', ''):
+        if i:
             count += int(i)
         else:
             sum_cals_elf.append(count)
@@ -45,7 +30,7 @@ def get_total_top_elves(total_calorie_list, num_elves_to_sum):
 
 if __name__ == '__main__':
     print('Getting input data...')
-    data = get_input_data('data/day1_input.txt')
+    data = get_data(day=1, year=2022).splitlines()
     print('Calculating total calories per elf...')
     total_p_elf = get_total_per_elf(data)
 
