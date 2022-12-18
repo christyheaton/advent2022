@@ -1,18 +1,5 @@
 import sys
-
-
-def get_input_data(file):
-    """Takes in a file, returns its contents as a list"""
-    try:
-        with open(file) as f:
-            lines = f.readlines()
-        return lines
-    except FileNotFoundError:
-        print('File not found.')
-        sys.exit()
-    except Exception as e:
-        print(f'An unexpected error occurred: {e}')
-        sys.exit()
+from aocd import get_data
 
 
 def game_logic(game_round, game_part):
@@ -114,6 +101,6 @@ def game(game_input, game_part):
 
 if __name__ == '__main__':
     print('Getting input data...')
-    data = get_input_data('data/day2_input.txt')
+    data = get_data(day=2, year=2022).splitlines()
     print(f'Your total score based on part 1 logic is ***{sum(game(data, 1))}***!')
     print(f'Your total score based on part 2 logic is ***{sum(game(data, 2))}***!')
