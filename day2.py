@@ -80,7 +80,7 @@ def play_round(game_round, game_part):
     if their_play not in ['A', 'B', 'C'] or your_play not in ['X', 'Y', 'Z']:
         print('An unexpected play was entered.')
         print(f"Their play must be one of 'A', 'B', 'C'. Their play was {their_play}.")
-        print(f"Your play must be one of 'X', 'Y', 'Z'. Their play was {your_play}.")
+        print(f"Your play must be one of 'X', 'Y', 'Z'. Your play was {your_play}.")
         sys.exit()
 
     if game_part == 1:
