@@ -2,6 +2,9 @@ from aocd import get_data
 
 
 def format_container_data(stacks_data):
+    """Takes in a list of lines from the input data
+    outputs a dictionary where the key is the column,
+    and value is a list of strings with the column info in order bottom to top"""
     stacks_dict = {key: [] for key in range(1, 10)}
     container_info = stacks_data[::-1]
     container_info_split = []
@@ -19,8 +22,10 @@ def format_container_data(stacks_data):
     return stacks_dict
 
 
-def perform_instructions(inst, stacks):
-    for i in inst:
+def perform_instructions(instructions, stacks):
+    """Given a set of instructions and a dictionary of stacks,
+    perform the instructions and output the modified dictionary of stacks"""
+    for i in instructions:
         sp = i.split(' ')
         count = int(sp[1])
         from_stack = int(sp[3])
@@ -34,10 +39,12 @@ if __name__ == '__main__':
     data = get_data(day=5, year=2022).splitlines()
     stack_data = data[0:9]
     instructions_data = data[10:]
+
     stacks_prelim = format_container_data(stack_data)
     print(f'Stacks before shuffling: {stacks_prelim}')
     stacks_shuffled = perform_instructions(instructions_data, stacks_prelim)
     print(f'Stacks after shuffling: {stacks_shuffled}')
+
     message = ''
     for order in stacks_shuffled.values():
         message += order[-1][1]
