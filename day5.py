@@ -30,8 +30,13 @@ def perform_instructions(instructions, stacks):
         count = int(sp[1])
         from_stack = int(sp[3])
         to_stack = int(sp[5])
-        for c in range(count):
-            stacks[to_stack].append(stacks[from_stack].pop())
+        #part 1
+        # for c in range(count):
+        #     stacks[to_stack].append(stacks[from_stack].pop())
+        #part2
+        for item in stacks[from_stack][-count:]:
+            stacks[to_stack].append(item)
+        del stacks[from_stack][len(stacks[from_stack]) - count:]
     return stacks
 
 
@@ -49,4 +54,3 @@ if __name__ == '__main__':
     for order in stacks_shuffled.values():
         message += order[-1][1]
     print(f'Message: {message}')
-
