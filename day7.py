@@ -1,25 +1,5 @@
 from aocd import get_data
 
-test_data = """$ cd /
-$ ls
-dir cats1
-dir cats2
-1010 happy.cat
-9999 grumpy.cat
-$ cd cats1
-$ ls
-dir snacks1
-666 lala.cat
-$ cd snacks1
-$ ls
-10000 yepper.cat
-$ cd ..
-$ cd ..
-$ cd cats2
-$ ls
-1111 nono.cat
-8765 molly.cat"""
-
 
 class Directory:
     def __init__(self, name, parent):
@@ -41,7 +21,7 @@ class Directory:
 
 
 class FileSystem:
-    def __init__(self, input_commands=test_data):
+    def __init__(self, input_commands):
         self.input = input_commands
         self.directories = []
         self.cwd = Directory(parent=None, name='/')
@@ -51,7 +31,7 @@ class FileSystem:
     def parse_input(self):
         # This will parse through data in Day7 format and construct a file system
         # tree based on all the cd and ls commands
-        commands = test_data.split('$ ')
+        commands = self.input.split('$ ')
         size = 0
         for c in commands:
             print(f'cwd: {self.cwd.name}, command: {c}')
@@ -91,6 +71,13 @@ class FileSystem:
 
 if __name__ == '__main__':
     data = get_data(day=7, year=2022)
-    test_data = data  # [0:500]
-    f = FileSystem(test_data)
-    print(f)
+    f = FileSystem(data)
+    final_list = []
+
+    for dir in f.directories:
+        total_size = dir.get_size_recursive()
+        if total_size <= 100_000:
+            final_list.append(total_size)
+
+    # Part 1 Solution:
+    print("Sum of all directories under 100,000 units is: ", sum(final_list))
