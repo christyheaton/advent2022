@@ -26,9 +26,9 @@ class Directory:
         self.name = name
         self.parent = parent
         if self.parent:
-            print(f"Constructor for new dir named: {name}, parent: {parent.name}")
+            print(f'Constructor for new dir named: {name}, parent: {parent.name}')
         else:
-            print(f"Constructor for new dir named: {name}, parent: None")
+            print(f'Constructor for new dir named: {name}, parent: None')
         self.sub_dirs = {}
         self.files = {}
         self.total_dir_size = 0
@@ -41,16 +41,16 @@ class Directory:
 
 
 class FileSystem:
-    def __init__(self, input=test_data):
-        self.input = input
+    def __init__(self, input_commands=test_data):
+        self.input = input_commands
         self.directories = []
-        self.cwd = Directory(parent=None, name="/")
+        self.cwd = Directory(parent=None, name='/')
         self.directories.append(self.cwd)
         self.parse_input()
 
     def parse_input(self):
         # This will parse through data in Day7 format and construct a file system
-        # tree based on all the cd and ls commands :D :D :D
+        # tree based on all the cd and ls commands
         commands = test_data.split('$ ')
         size = 0
         for c in commands:
@@ -62,27 +62,27 @@ class FileSystem:
             elif c.startswith('cd'):
                 print(f'Entering change directory with line {c}')
                 target_name = c.split()[1]
-                if "/" in target_name:
-                    print("skipping / dir")
+                if '/' in target_name:
+                    print('skipping / dir')
                     continue
                 else:
                     self.cwd = self.cwd.sub_dirs.get(c.split()[1])
-                    print(f"new cwd: {self.cwd.name}")
+                    print(f'new cwd: {self.cwd.name}')
 
     def parse_ls(self, contents):
-        print(f"parsing 'ls' for cwd: {self.cwd.name}")
+        print(f'parsing "ls" for cwd: {self.cwd.name}')
         lines = contents.splitlines()
         for line in lines:
             if line.startswith('dir'):
                 dir_name = line.split()[1]
-                print(f"Parsing line: '{line}': found new dir to create: {dir_name}")
+                print(f'Parsing line: "{line}": found new dir to create: {dir_name}')
                 new_dir = Directory(parent=self.cwd, name=dir_name)
                 self.directories.append(new_dir)
                 self.cwd.sub_dirs[dir_name] = new_dir
             elif line[0].isnumeric():
-                print(f"Parsing line: {line}")
+                print(f'Parsing line: {line}')
                 size, name = line.split()
-                print(f"Found file with name {name}, size {size}...")
+                print(f'Found file with name {name}, size {size}...')
                 self.cwd.files[name] = int(size)
                 print(f'Populating files dict with "{name}" size: {size}')
             else:
