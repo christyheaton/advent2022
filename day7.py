@@ -22,26 +22,27 @@ class Directory:
             else:
                 raise ValueError(f'Unknown input type: {line}')
 
-    def get_total_size(self):
+    def get_size_recursive(self):
         self.total_dir_size = sum(self.files.values())
+        for key in self.sub_dirs.keys():
+            my_sub_dir = self.sub_dirs.get(key)
+            self.total_dir_size += my_sub_dir.get_size_recursive()
         return self.total_dir_size
 
 
 if __name__ == '__main__':
     data = get_data(day=7, year=2022)
-    count_size = 0
     test_data = data#[0:300]
     current_dir = None
     commands = test_data.split('$ ')
+    size = 0
     for c in commands:
         print(f'for c Current dir {current_dir}')
         if c.startswith('ls'):
             print(f'c. starts with Current dir {current_dir}')
             current_dir.parse_ls(c[3:])
-            total_dir_size = current_dir.get_total_size()
-            if total_dir_size < 100_000:
-                print(f'Total size is less than 100,000, adding to total.')
-                count_size += total_dir_size
+            if current_dir.get_size_recursive() <= 100_000:
+                size += current_dir.get_size_recursive()
         elif c.startswith('cd ..'):
             current_dir = current_dir.parent_dir
         elif c.startswith('cd'):
@@ -51,4 +52,4 @@ if __name__ == '__main__':
                 current_dir = Directory(parent=None)
             else:
                 current_dir = current_dir.sub_dirs.get(c.split()[1])
-    print(f'Total count is {count_size}')
+    print(size)
