@@ -17,11 +17,14 @@ class Directory:
                 self.sub_dirs[dir_name] = Directory(parent=self)
             elif line[0].isnumeric():
                 size, name = line.split()
-                self.files[name] = size
+                self.files[name] = int(size)
                 print(f'Populating files dict with "{name}" size: {size}')
-                self.total_dir_size += int(size)
             else:
                 raise ValueError(f'Unknown input type: {line}')
+
+    def get_total_size(self):
+        self.total_dir_size = sum(self.files.values())
+        return self.total_dir_size
 
 
 if __name__ == '__main__':
@@ -35,9 +38,10 @@ if __name__ == '__main__':
         if c.startswith('ls'):
             print(f'c. starts with Current dir {current_dir}')
             current_dir.parse_ls(c[3:])
-            if current_dir.total_dir_size < 100_000:
-                print(f'Total size of dir is {current_dir.total_dir_size}. Adding to total...')
-                count_size += current_dir.total_dir_size
+            total_dir_size = current_dir.get_total_size()
+            if total_dir_size < 100_000:
+                print(f'Total size is less than 100,000, adding to total.')
+                count_size += total_dir_size
         elif c.startswith('cd ..'):
             current_dir = current_dir.parent_dir
         elif c.startswith('cd'):
