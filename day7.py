@@ -73,15 +73,14 @@ if __name__ == '__main__':
     data = get_data(day=7, year=2022)
     f = FileSystem(data)
     print()
-    final_list_pt1 = []
-    final_list_pt2 = []
-
+    
     # Part 1 Solution:
+    final_list_pt1 = []
     for dir in f.directories:
         total_size = dir.get_size_recursive()
         if total_size <= 100_000:
             final_list_pt1.append(total_size)
-        final_list_pt2.append(total_size)
+        final_list_pt1.append(total_size)
 
     print('Part 1:')
     print(f'Sum of all directories under 100,000 units is: {sum(final_list_pt1)}.')
