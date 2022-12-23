@@ -72,12 +72,26 @@ class FileSystem:
 if __name__ == '__main__':
     data = get_data(day=7, year=2022)
     f = FileSystem(data)
-    final_list = []
+    print()
+    final_list_pt1 = []
+    final_list_pt2 = []
 
+    # Part 1 Solution:
     for dir in f.directories:
         total_size = dir.get_size_recursive()
         if total_size <= 100_000:
-            final_list.append(total_size)
+            final_list_pt1.append(total_size)
+        final_list_pt2.append(total_size)
 
-    # Part 1 Solution:
-    print("Sum of all directories under 100,000 units is: ", sum(final_list))
+    print('Part 1:')
+    print(f'Sum of all directories under 100,000 units is: {sum(final_list_pt1)}.')
+
+    # Part 2 Solution:
+    need_to_delete = f.directories[0].get_size_recursive() - 70_000_000 + 30_000_000
+    big_dirs = []
+    for d in f.directories:
+        if d.get_size_recursive() > need_to_delete:
+            big_dirs.append(d.get_size_recursive())
+
+    print('Part 2:')
+    print(f'Need to delete the directory of size {min(big_dirs)} units.')
