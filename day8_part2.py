@@ -1,25 +1,16 @@
 import pandas as pd
 
-# with open('data/day8_input.txt') as f:
-#     lines = f.readlines()
 
-lines = ['30373\n',
-         '25512\n',
-         '65332\n',
-         '33549\n',
-         '35390\n']
-
-
-def data_list_to_df(data):
+def data_list_to_df(data_input):
     data_list = []
     x = 0
     y = 0
-    while x < len(lines):
-        for line in lines[x]:
+    while x < len(data_input):
+        for line in data_input[x]:
             for num in line:
-                if line == '\n':
+                if num == '\n':
                     continue
-                data_list.append({'val': int(line), 'xcoord': x, 'ycoord': y})
+                data_list.append({'val': int(num), 'xcoord': x, 'ycoord': y})
                 y += 1
         x += 1
         y = 0
@@ -42,24 +33,21 @@ def calc_visible(df, col, direction):
         # part 2
         print(f'Past trees to consider: {past_trees}, view score: {view_score}')
         print(f"At coordinates x:{tree['xcoord']}, y:{tree['ycoord']}, direction: {direction}")
-        for i, pt in enumerate(past_trees[::-1]):
-            # print(f'pt: {pt}')
-            # print(f'past_trees: {past_trees}')
+        for pt_i, pt in enumerate(past_trees[::-1]):
             view_score += 1
 
             if pt == -1:
-                df.loc[i, f'view_score_{direction}'] = view_score
                 print(f'ending tree with score {view_score}')
                 break
             elif pt >= tree['val']:
-                print(
-                    f"Compared past value {pt} with {tree['val']}, it was blocking. Tallying view score: {view_score}")
-                df.loc[i, f'view_score_{direction}'] = view_score
+                print(f"Compared past value {pt} with {tree['val']}, "
+                      f"it was blocking. Tallying view score: {view_score}")
                 print(f'ending tree with score {view_score}')
                 break
             else:
-                print(f"Compared past value {pt} with {tree['val']}, it was not blocking")
-
+                print(f"Compared past value {pt} with {tree['val']},"
+                      f" it was not blocking")
+            df.loc[i, f'view_score_{direction}'] = view_score
         past_trees.append(tree['val'])
 
         # part 1
@@ -87,6 +75,15 @@ def calc_visible(df, col):
 """
 
 if __name__ == '__main__':
+    with open('data/day8_input.txt') as f:
+        lines = f.readlines()
+
+    # lines = ['30373\n',
+    #          '25512\n',
+    #          '65332\n',
+    #          '33549\n',
+    #          '35390\n']
+
     data_df = data_list_to_df(lines)
     data_df['visible'] = False
     data_df = calc_visible(data_df, 'xcoord', 1)
