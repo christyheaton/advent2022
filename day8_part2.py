@@ -38,16 +38,18 @@ def calc_visible(df, col, direction):
 
             if pt == -1:
                 print(f'ending tree with score {view_score}')
+                df.loc[i, f'view_score_{direction}'] = view_score
                 break
             elif pt >= tree['val']:
                 print(f"Compared past value {pt} with {tree['val']}, "
                       f"it was blocking. Tallying view score: {view_score}")
                 print(f'ending tree with score {view_score}')
+                df.loc[i, f'view_score_{direction}'] = view_score
                 break
             else:
                 print(f"Compared past value {pt} with {tree['val']},"
                       f" it was not blocking")
-            df.loc[i, f'view_score_{direction}'] = view_score
+
         past_trees.append(tree['val'])
 
         # part 1
@@ -104,4 +106,13 @@ if __name__ == '__main__':
 
     data_df.drop('index', axis=1, inplace=True)
     data_df = calc_visible(data_df, 'ycoord', 4)
+    print('Part 1:')
     print(data_df.visible.value_counts())
+
+    data_df = data_df.fillna(1)
+    data_df['total_view_score'] = (data_df['view_score_1'] *
+                                   data_df['view_score_2'] *
+                                   data_df['view_score_3'] *
+                                   data_df['view_score_4'])
+    print('Part 2:')
+    print(max(data_df['total_view_score']))
