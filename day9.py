@@ -1,4 +1,4 @@
-# from aocd import get_data
+from aocd import get_data
 from dataclasses import dataclass
 
 
@@ -9,69 +9,74 @@ class Point:
 
 
 class Rope:
-    def __init__(self):
+    def __init__(self, length):
         self.head = Point(0, 0)
         self.tail = Point(0, 0)
+        self.length = length
+        self.body = [Point(0, 0) for x in range(length)]
 
-    def is_touching(self):
-        if abs(self.head.x - self.tail.x) < 2 and abs(self.head.y - self.tail.y) < 2:
+    def is_touching(self, a, b):
+        if abs(a.x - b.x) < 2 and abs(a.y - b.y) < 2:
             return True
 
-    def move_tail(self):
+    def move_segment(self, a, b):
         above = False
         right = False
 
-        if self.is_touching():
+        if self.is_touching(a, b):
             return
-        elif self.head.x == self.tail.x:
+        elif a.x == b.x:
             # On the same horizontal plane -- move tail vertically
-            if self.head.y < self.tail.y:
-                self.tail.y -= 1
+            if a.y < b.y:
+                b.y -= 1
             else:
-                self.tail.y += 1
-        elif self.head.y == self.tail.y:
+                b.y += 1
+        elif a.y == b.y:
             # On the same vertical plane - move tail horizontally
-            if self.head.x < self.tail.x:
-                self.tail.x -= 1
+            if a.x < b.x:
+                b.x -= 1
             else:
-                self.tail.x += 1
+                b.x += 1
         else:
-            if self.head.x > self.tail.x:
+            if a.x > b.x:
                 right = True
-            if self.head.y > self.tail.y:
+            if a.y > b.y:
                 above = True
 
             if above and right:
-                self.tail.x += 1
-                self.tail.y += 1
+                b.x += 1
+                b.y += 1
             elif above and not right:
-                self.tail.x -= 1
-                self.tail.y += 1
+                b.x -= 1
+                b.y += 1
             elif not above and right:
-                self.tail.x += 1
-                self.tail.y -= 1
+                b.x += 1
+                b.y -= 1
             else:
-                self.tail.x -= 1
-                self.tail.y -= 1
+                b.x -= 1
+                b.y -= 1
 
     def move_head(self, direction):
         match direction:
             case 'U':
-                self.head.y += 1
+                self.body[0].y += 1
             case 'D':
-                self.head.y -= 1
+                self.body[0].y -= 1
             case 'R':
-                self.head.x += 1
+                self.body[0].x += 1
             case 'L':
-                self.head.x -= 1
+                self.body[0].x -= 1
+
+    def move_body(self):
+        for segment_i in range(1, len(self.body)):
+            self.move_segment(self.body[segment_i - 1], self.body[segment_i])
 
 
-def main():
-    # moves = get_data(day=9, year=2022).splitlines()
-    with open('data/day9_input.txt') as f:
-        moves = f.readlines()
+if __name__ == '__main__':
+    moves = get_data(day=9, year=2022).splitlines()
 
-    r = Rope()
+    # use 2 for part 1 and 10 for part 2
+    r = Rope(2)
     visited = set()
     visited.add((0, 0))
 
@@ -79,12 +84,10 @@ def main():
         direction, amount = m.split()
         for i in range(int(amount)):
             r.move_head(direction)
-            r.move_tail()
-            visited.add((r.tail.x, r.tail.y))
+            r.move_body()
+            visited.add((r.body[-1].x, r.body[-1].y))
 
     print(f'Number of positions occupied by tail: {len(visited)}')
-    return visited
 
 
-if __name__ == '__main__':
-    main()
+
