@@ -18,7 +18,7 @@ if __name__ == '__main__':
     cycles = []
     cycle = 0
     x = 1
-    
+
     for line in input_data:
         cycle += 1
         if line == 'noop':
@@ -35,3 +35,4 @@ if __name__ == '__main__':
         if c.count in [20, 60, 100, 140, 180, 220]:
             part1 += (c.count * c.x)
     print(f'Part 1 answer is {part1}.')
+    
