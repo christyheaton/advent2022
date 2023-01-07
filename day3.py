@@ -2,16 +2,16 @@ from aocd import get_data
 import string
 
 
-def get_item_total(contents):
+def get_item_total(contents: list) -> int:
     total = 0
     for d in contents:
-        half = int(len(d)/2)
+        half = int(len(d) / 2)
         item = ''.join(list(set(d[0:half]) & set(d[half:])))
-        total += alphabet.index(item)+1
+        total += alphabet.index(item) + 1
     return total
 
 
-def get_badge_total(contents):
+def get_badge_total(contents: list) -> int:
     group = list(zip(*[iter(contents)] * 3))
     total = 0
     for g in group:
@@ -26,5 +26,3 @@ if __name__ == '__main__':
 
     print(f'Shared item in rucksack total is {get_item_total(data)}')
     print(f'Badge total is {get_badge_total(data)}')
-
-
