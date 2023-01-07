@@ -4,7 +4,7 @@ from aocd import get_data
 
 
 class Directory:
-    def __init__(self, name: str, parent: [Directory, None]) -> None:
+    def __init__(self, name: str, parent: Directory = None) -> None:
         self.name = name
         self.parent = parent
         if self.parent:
