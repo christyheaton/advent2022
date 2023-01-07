@@ -9,7 +9,7 @@ WIN = 6
 DRAW = 3
 
 
-def game1(their_play, your_play):
+def game1(their_play: str, your_play: str) -> int:
     """Takes in two strings, one for their play, one for your play
     Returns an integer of your score"""
     your_score = 0
@@ -38,7 +38,7 @@ def game1(their_play, your_play):
     return your_score
 
 
-def game2(their_play, your_play):
+def game2(their_play: str, your_play: str) -> int:
     """Takes in two strings, one for their play, one for your play
     Returns an integer of your score"""
     your_score = 0
@@ -70,7 +70,7 @@ def game2(their_play, your_play):
     return your_score
 
 
-def play_round(game_round, game_part):
+def play_round(game_round: str, game_part: int) -> int:
     """Takes in a string of a single game round and game part logic
     Returns an integer of your score for the round
     """
@@ -94,7 +94,7 @@ def play_round(game_round, game_part):
     return your_score
 
 
-def game_summary(game_input, game_part):
+def game_summary(game_input: list, game_part: int) -> list:
     """Takes in list of a full game and an int of the game part logic
     Returns a list of scores, one for each round"""
     return [play_round(game_round, game_part) for game_round in game_input]

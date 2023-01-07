@@ -1,11 +1,11 @@
 from aocd import get_data
 
 
-def get_total_per_elf(elf_calorie_list):
+def get_total_per_elf(elf_calories: list) -> list:
     """Takes in a list of calories, returns a list of total calories per elf"""
     sum_cals_elf = []
     count = 0
-    cal_str = '|'.join(elf_calorie_list)
+    cal_str = '|'.join(elf_calories)
     for i in cal_str.split('|'):
         if i:
             count += int(i)
@@ -16,7 +16,7 @@ def get_total_per_elf(elf_calorie_list):
     return sum_cals_elf
 
 
-def get_total_top_elves(total_calorie_list, num_elves_to_sum):
+def get_total_top_elves(total_calorie_list: list, num_elves_to_sum: int) -> int:
     """Takes in a list of total calories per elf and a number of elves
     returns the sum of the calorie counts for the inputted number elves
     with the highest calorie counts"""
