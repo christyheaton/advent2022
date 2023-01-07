@@ -9,17 +9,17 @@ class Point:
 
 
 class Rope:
-    def __init__(self, length):
+    def __init__(self, length: int) -> None:
         self.head = Point(0, 0)
         self.tail = Point(0, 0)
         self.length = length
         self.body = [Point(0, 0) for x in range(length)]
 
-    def is_touching(self, a, b):
+    def is_touching(self, a: Point, b: Point) -> bool:
         if abs(a.x - b.x) < 2 and abs(a.y - b.y) < 2:
             return True
 
-    def move_segment(self, a, b):
+    def move_segment(self, a: Point, b: Point) -> None:
         above = False
         right = False
 
@@ -56,7 +56,7 @@ class Rope:
                 b.x -= 1
                 b.y -= 1
 
-    def move_head(self, direction):
+    def move_head(self, direction: str) -> None:
         match direction:
             case 'U':
                 self.body[0].y += 1
@@ -67,7 +67,7 @@ class Rope:
             case 'L':
                 self.body[0].x -= 1
 
-    def move_body(self):
+    def move_body(self) -> None:
         for segment_i in range(1, len(self.body)):
             self.move_segment(self.body[segment_i - 1], self.body[segment_i])
 

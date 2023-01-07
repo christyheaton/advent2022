@@ -1,7 +1,7 @@
 from aocd import get_data
 
 
-def format_container_data(stacks_data):
+def format_container_data(stacks_data: list) -> dict:
     """Takes in a list of lines from the input data
     outputs a dictionary where the key is the column,
     and value is a list of strings with the column info in order bottom to top"""
@@ -22,7 +22,7 @@ def format_container_data(stacks_data):
     return stacks_dict
 
 
-def perform_instructions(instructions, stacks):
+def perform_instructions(instructions: str, stacks: dict) -> dict:
     """Given a set of instructions and a dictionary of stacks,
     perform the instructions and output the modified dictionary of stacks"""
     for i in instructions:

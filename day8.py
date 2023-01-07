@@ -18,7 +18,7 @@ class Tree:
 
 
 class Forest:
-    def __init__(self, forest):
+    def __init__(self, forest: str) -> None:
         self.input_data = forest
         self.grid = {}
         self.visible_trees = []
@@ -27,7 +27,7 @@ class Forest:
 
         self.populate_grid()
 
-    def populate_grid(self):
+    def populate_grid(self) -> None:
         row = 0
         col = 0
         for line in self.input_data.splitlines():
@@ -37,7 +37,7 @@ class Forest:
             row += 1
             col = 0
 
-    def check_visibility(self, coord_list1, coord_list2, orientation):
+    def check_visibility(self, coord_list1: range, coord_list2: range, orientation: str) -> None:
         # Set an initial null tree so that every edge tree is visible in comparison
         for coord1 in coord_list1:
             highest_so_far = -1  # Set an initial null tree when starting a new row or column
@@ -50,7 +50,7 @@ class Forest:
                     current_tree.visible = True
                     highest_so_far = current_tree.height
 
-    def count_vis_total(self):
+    def count_vis_total(self) -> int:
         visible = 0
         for key in self.grid.keys():
             tree = self.grid.get(key)
@@ -58,7 +58,7 @@ class Forest:
                 visible += 1
         return visible
 
-    def count_visible_trees(self):
+    def count_visible_trees(self) -> int:
         rows_top_to_bottom = range(0, self.total_rows)
         columns_left_to_right = range(0, self.total_cols)
         rows_bottom_to_top = rows_top_to_bottom[::-1]
@@ -74,7 +74,7 @@ class Forest:
         self.check_visibility(columns_left_to_right, rows_bottom_to_top, 'vertical')
         return f.count_vis_total()
 
-    def get_directional_view_score(self, direction, tree):
+    def get_directional_view_score(self, direction: str, tree: Tree) -> int:
         row = tree.row
         col = tree.col
         directional_view_score = 0
@@ -102,7 +102,7 @@ class Forest:
 
         return directional_view_score
 
-    def calculate_total_view_score(self, tree):
+    def calculate_total_view_score(self, tree: Tree) -> int:
         total = 1
         all_view_scores = [self.get_directional_view_score(x, tree) for x in ['up',
                                                                               'down',
@@ -113,7 +113,7 @@ class Forest:
                 total = total * score
         return total
 
-    def get_view_scores_for_every_tree(self):
+    def get_view_scores_for_every_tree(self) -> int:
         return max([f.calculate_total_view_score(x) for x in self.grid.values()])
 
 

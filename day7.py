@@ -1,8 +1,10 @@
+from __future__ import annotations
+
 from aocd import get_data
 
 
 class Directory:
-    def __init__(self, name, parent):
+    def __init__(self, name: str, parent: [Directory, None]) -> None:
         self.name = name
         self.parent = parent
         if self.parent:
@@ -13,7 +15,7 @@ class Directory:
         self.files = {}
         self.total_dir_size = 0
 
-    def get_size_recursive(self):
+    def get_size_recursive(self) -> int:
         self.total_dir_size = sum(self.files.values())
         for key in self.sub_dirs.keys():
             self.total_dir_size += self.sub_dirs.get(key).get_size_recursive()
@@ -21,14 +23,14 @@ class Directory:
 
 
 class FileSystem:
-    def __init__(self, input_commands):
+    def __init__(self, input_commands: str) -> None:
         self.input = input_commands
         self.directories = []
         self.cwd = Directory(parent=None, name='/')
         self.directories.append(self.cwd)
         self.parse_input()
 
-    def parse_input(self):
+    def parse_input(self) -> None:
         # This will parse through data in Day7 format and construct a file system
         # tree based on all the cd and ls commands
         commands = self.input.split('$ ')
@@ -49,7 +51,7 @@ class FileSystem:
                     self.cwd = self.cwd.sub_dirs.get(c.split()[1])
                     print(f'new cwd: {self.cwd.name}')
 
-    def parse_ls(self, contents):
+    def parse_ls(self, contents: str) -> None:
         print(f'parsing "ls" for cwd: {self.cwd.name}')
         lines = contents.splitlines()
         for line in lines:

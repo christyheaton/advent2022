@@ -9,7 +9,7 @@ class Cycle:
     instruction: str
 
 
-def add_cycle(instruction_line):
+def add_cycle(instruction_line: str) -> None:
     return cycles.append(Cycle(count=cycle, x=x, instruction=instruction_line))
 
 
@@ -35,4 +35,3 @@ if __name__ == '__main__':
         if c.count in [20, 60, 100, 140, 180, 220]:
             part1 += (c.count * c.x)
     print(f'Part 1 answer is {part1}.')
-    
