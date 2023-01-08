@@ -23,7 +23,8 @@ def add_cycle(instruction_line: str, cycles: list, cycle: int, x: int) -> None:
 
 def draw(x_val: int, draw_position: int) -> int:
     """
-    Draws a # if the sprite is visible, a . if not
+    Draws a # if the sprite is visible, a . if not.
+    Starts a new line every 40 characters.
     :param x_val: the x value in the cycle
     :param draw_position: the current pixel on the line
     :return: the draw_position to use next time this function is called
@@ -41,13 +42,17 @@ def draw(x_val: int, draw_position: int) -> int:
     return draw_position
 
 
-def main() -> None:
-    input_data = get_data(day=10, year=2022).splitlines()
+def generate_cycles(input_data: list) -> list[Cycle]:
+    """
+    Generates a list of cycles from the input_data
+    and draws the output as it goes
+    :param input_data: the provided input data
+    :return: a list of Cycles
+    """
     cycles = []
     cycle = 0
     x = 1
     draw_pos = 0
-    print('Part 2 answer is:')
     for line in input_data:
         cycle += 1
         draw_pos = draw(x, draw_pos)
@@ -60,7 +65,13 @@ def main() -> None:
         draw_pos = draw(x, draw_pos)
         add_cycle(line, cycles, cycle, x)
         x += int(increment)
+    return cycles
 
+
+def main() -> None:
+    input_data = get_data(day=10, year=2022).splitlines()
+    print('Part 2 answer is:')
+    cycles = generate_cycles(input_data)
     part1 = 0
     for c in cycles:
         if c.count in [20, 60, 100, 140, 180, 220]:
