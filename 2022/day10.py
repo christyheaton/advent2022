@@ -10,7 +10,19 @@ class Cycle:
 
 
 def add_cycle(instruction_line: str) -> None:
+    """
+
+    :param instruction_line:
+    :return:
+    """
     return cycles.append(Cycle(count=cycle, x=x, instruction=instruction_line))
+
+
+def draw(cyc):
+    if cycle % 40 == 0:
+        print('#')
+    else:
+        print('#', end='')
 
 
 if __name__ == '__main__':
@@ -21,12 +33,14 @@ if __name__ == '__main__':
 
     for line in input_data:
         cycle += 1
+        draw(cycle)
         if line == 'noop':
             add_cycle(line)
             continue
         instruction, increment = line.split()
         add_cycle(line)
         cycle += 1
+        draw(cycle)
         add_cycle(line)
         x += int(increment)
 
