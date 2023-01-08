@@ -8,7 +8,8 @@ class Monkey:
     starting_items: list
     operation: str
     test_divisible_by: int
-    test_response: list
+    if_true_throw_to: int
+    if_false_throw_to: int
 
 
 def main() -> None:
@@ -25,11 +26,14 @@ def main() -> None:
             operation = line[2].split('Operation: ')[1]
             test = int(line[3].split('Test: ')[1][-1])
             test_response = line[-3:]
+            if_true_throw_to = int(test_response[0][-1])
+            if_false_throw_to = int(test_response[2][-1])
             monkeys.append(Monkey(monkey_id=monkey_id,
                                   starting_items=starting_items,
                                   operation=operation,
                                   test_divisible_by=test,
-                                  test_response=test_response))
+                                  if_true_throw_to=if_true_throw_to,
+                                  if_false_throw_to=if_false_throw_to))
     for monkey in monkeys:
         print(monkey)
 
