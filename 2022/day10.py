@@ -18,11 +18,18 @@ def add_cycle(instruction_line: str) -> None:
     return cycles.append(Cycle(count=cycle, x=x, instruction=instruction_line))
 
 
-def draw(cyc):
-    if cycle % 40 == 0:
-        print('#')
+def draw(x_val, draw_position):
+    if x_val in [draw_position-1, draw_position, draw_position+1]:
+        draw_char = '#'
     else:
-        print('#', end='')
+        draw_char = '.'
+    if draw_position %  == 0 and draw_position:
+        print(f'{draw_char}\n', end='')
+        draw_position = 0
+    else:
+        print(draw_char, end='')
+    draw_position += 1
+    return draw_position
 
 
 if __name__ == '__main__':
@@ -30,17 +37,18 @@ if __name__ == '__main__':
     cycles = []
     cycle = 0
     x = 1
+    draw_pos = 0
 
     for line in input_data:
         cycle += 1
-        draw(cycle)
+        draw_pos = draw(x, draw_pos)
         if line == 'noop':
             add_cycle(line)
             continue
         instruction, increment = line.split()
         add_cycle(line)
         cycle += 1
-        draw(cycle)
+        draw_pos = draw(x, draw_pos)
         add_cycle(line)
         x += int(increment)
 
@@ -48,4 +56,5 @@ if __name__ == '__main__':
     for c in cycles:
         if c.count in [20, 60, 100, 140, 180, 220]:
             part1 += (c.count * c.x)
+    print()
     print(f'Part 1 answer is {part1}.')
