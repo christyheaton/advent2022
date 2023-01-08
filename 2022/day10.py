@@ -16,7 +16,7 @@ def add_cycle(instruction_line: str, cycles: list, cycle: int, x: int) -> None:
     :param cycles: the list of cycles
     :param cycle: the current cycle
     :param x: the value of x in the cycle
-    :return: the cycles list with a new cycle appended
+    :return: None
     """
     return cycles.append(Cycle(count=cycle, x=x, instruction=instruction_line))
 
