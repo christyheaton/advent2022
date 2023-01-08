@@ -9,47 +9,56 @@ class Cycle:
     instruction: str
 
 
-def add_cycle(instruction_line: str) -> None:
+def add_cycle(instruction_line: str, cycles: list, cycle: int, x: int) -> None:
     """
-
-    :param instruction_line:
-    :return:
+    Appends a new cycle to the cycles list
+    :param instruction_line: the current instruction line
+    :param cycles: the list of cycles
+    :param cycle: the current cycle
+    :param x: the value of x in the cycle
+    :return: the cycles list with a new cycle appended
     """
     return cycles.append(Cycle(count=cycle, x=x, instruction=instruction_line))
 
 
-def draw(x_val, draw_position):
+def draw(x_val: int, draw_position: int) -> int:
+    """
+    Draws a # if the sprite is visible, a . if not
+    :param x_val: the x value in the cycle
+    :param draw_position: the current pixel on the line
+    :return: the draw_position to use next time this function is called
+    """
     if x_val in [draw_position-1, draw_position, draw_position+1]:
         draw_char = '#'
     else:
         draw_char = '.'
-    if draw_position %  == 0 and draw_position:
+    if draw_position == 39:
         print(f'{draw_char}\n', end='')
         draw_position = 0
     else:
         print(draw_char, end='')
-    draw_position += 1
+        draw_position += 1
     return draw_position
 
 
-if __name__ == '__main__':
+def main() -> None:
     input_data = get_data(day=10, year=2022).splitlines()
     cycles = []
     cycle = 0
     x = 1
     draw_pos = 0
-
+    print('Part 2 answer is:')
     for line in input_data:
         cycle += 1
         draw_pos = draw(x, draw_pos)
         if line == 'noop':
-            add_cycle(line)
+            add_cycle(line, cycles, cycle, x)
             continue
         instruction, increment = line.split()
-        add_cycle(line)
+        add_cycle(line, cycles, cycle, x)
         cycle += 1
         draw_pos = draw(x, draw_pos)
-        add_cycle(line)
+        add_cycle(line, cycles, cycle, x)
         x += int(increment)
 
     part1 = 0
@@ -58,3 +67,7 @@ if __name__ == '__main__':
             part1 += (c.count * c.x)
     print()
     print(f'Part 1 answer is {part1}.')
+
+
+if __name__ == '__main__':
+    main()
