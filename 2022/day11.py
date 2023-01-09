@@ -49,7 +49,7 @@ def inspect(monkey: Monkey) -> None:
     :param monkey: a monkey
     :return: None
     """
-    monkey.items = [int(eval(monkey.operation)/3) for old in monkey.items]
+    monkey.items = [int(eval(monkey.operation) / 3) for old in monkey.items]
 
 
 def throw(monkeys) -> None:
@@ -62,7 +62,7 @@ def throw(monkeys) -> None:
         inspect(monkey)
         print(f'Monkey {monkey.monkey_id} has {len(monkey.items)} items: {monkey.items}.')
         while monkey.items:
-            monkey.monkey_business_factor +=1
+            monkey.monkey_business_factor += 1
             item = monkey.items[0]
             print(f'Current item is {item}')
             if item % monkey.test_divisible_by == 0:
@@ -78,16 +78,15 @@ def throw(monkeys) -> None:
 
 def main() -> None:
     input_data = get_data(day=11, year=2022)
-
-    with open('data/day11_test.txt') as f:
-        input_data = f.read()
     monkeys = gen_monkey_list(input_data)
 
-    for round in range(20):
-        print(f'Round {round}')
+    for r in range(20):
+        print(f'Round {r}')
         throw(monkeys)
 
     print(monkeys)
+    monkey_business_factors = sorted([m.monkey_business_factor for m in monkeys])
+    print(f'Part 1 solution: {monkey_business_factors[-1] * monkey_business_factors[-2]}')
 
 
 if __name__ == '__main__':
