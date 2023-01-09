@@ -88,9 +88,9 @@ def monkey_business(monkeys: list[Monkey]) -> int:
 
 def main() -> None:
     input_data: str = get_data(day=11, year=2022)
-    monkeys: list[Monkey] = gen_monkey_list(input_data)
 
     # Part 1
+    monkeys: list[Monkey] = gen_monkey_list(input_data)
     for r in range(20):
         throw(monkeys, 0)
     print(f'Part 1 solution: {monkey_business(monkeys)}')
@@ -101,10 +101,8 @@ def main() -> None:
     trick = 1
     for num in test_nums:
         trick *= num
-
     for r in range(10_000):
         throw(monkeys, trick)
-
     print(f'Part 2 solution: {monkey_business(monkeys)}')
 
 
