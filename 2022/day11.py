@@ -19,8 +19,8 @@ def gen_monkey_list(input_data: str) -> list[Monkey]:
     :param input_data: a string with monkey information
     :return: a list of monkey objects
     """
-    monkeys = []
-    my_data = input_data.split('Monkey ')
+    monkeys: list[Monkey] = []
+    my_data: list = input_data.split('Monkey ')
     for monkey in my_data:
         monkey = monkey.strip()
         if not monkey:
@@ -43,50 +43,69 @@ def gen_monkey_list(input_data: str) -> list[Monkey]:
     return monkeys
 
 
-def inspect(monkey: Monkey) -> None:
+def inspect(monkey: Monkey, trick) -> None:
     """
     Changes the monkey's items according to the monkey's operation
     :param monkey: a monkey
+    :param trick: all the test numbers multiplied together for
+                  use in part 2. for part 1 use 0
     :return: None
     """
-    monkey.items = [int(eval(monkey.operation) / 3) for old in monkey.items]
+    if trick == 0:
+        monkey.items = [eval(monkey.operation) // 3 for old in monkey.items]
+    else:
+        monkey.items = [eval(monkey.operation) % trick for old in monkey.items]
 
 
-def throw(monkeys) -> None:
+def throw(monkeys, trick) -> None:
     """
     Tests divisibility and throws item to the appropriate monkey
     :param monkeys: a list of monkeys
+    :param trick: all the test numbers multiplied together for
+                  use in part 2. for part 1 use 0
     :return: None
     """
     for monkey in monkeys:
-        inspect(monkey)
-        print(f'Monkey {monkey.monkey_id} has {len(monkey.items)} items: {monkey.items}.')
+        inspect(monkey, trick)
         while monkey.items:
             monkey.monkey_business_factor += 1
             item = monkey.items[0]
-            print(f'Current item is {item}')
             if item % monkey.test_divisible_by == 0:
-                print(f'{item} is divisible by {monkey.test_divisible_by}')
-                print(f'Monkey {monkey.monkey_id} throws item {item} to monkey {monkey.if_true_throw_to}')
                 monkeys[monkey.if_true_throw_to].items.append(monkey.items.pop(0))
             else:
-                print(f'{item} is not divisible by {monkey.test_divisible_by}')
-                print(f'Monkey {monkey.monkey_id} throws item {item} to monkey {monkey.if_false_throw_to}')
                 monkeys[monkey.if_false_throw_to].items.append(monkey.items.pop(0))
-            print(f'Monkey {monkey.monkey_id} now has {len(monkey.items)} items: {monkey.items}.')
+
+
+def monkey_business(monkeys: list[Monkey]) -> int:
+    """
+    Calculates the solution for part 1 and 2
+    :param monkeys: a list of Monkeys
+    :return: the highest 2 monkey business factors multiplied together
+    """
+    monkey_business_factors = sorted([m.monkey_business_factor for m in monkeys])
+    return monkey_business_factors[-1] * monkey_business_factors[-2]
 
 
 def main() -> None:
-    input_data = get_data(day=11, year=2022)
-    monkeys = gen_monkey_list(input_data)
+    input_data: str = get_data(day=11, year=2022)
+    monkeys: list[Monkey] = gen_monkey_list(input_data)
 
+    # Part 1
     for r in range(20):
-        print(f'Round {r}')
-        throw(monkeys)
+        throw(monkeys, 0)
+    print(f'Part 1 solution: {monkey_business(monkeys)}')
 
-    print(monkeys)
-    monkey_business_factors = sorted([m.monkey_business_factor for m in monkeys])
-    print(f'Part 1 solution: {monkey_business_factors[-1] * monkey_business_factors[-2]}')
+    # Part 2
+    monkeys: list[Monkey] = gen_monkey_list(input_data)
+    test_nums: list[int, ...] = [m.test_divisible_by for m in monkeys]
+    trick = 1
+    for num in test_nums:
+        trick *= num
+
+    for r in range(10_000):
+        throw(monkeys, trick)
+
+    print(f'Part 2 solution: {monkey_business(monkeys)}')
 
 
 if __name__ == '__main__':
