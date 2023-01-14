@@ -1,5 +1,6 @@
 from aocd import get_data
 from dataclasses import dataclass
+from collections import deque
 
 
 @dataclass()
@@ -13,13 +14,13 @@ class Monkey:
     monkey_business_factor: int = 0
 
 
-def gen_monkey_list(input_data: str) -> list[Monkey]:
+def gen_monkey_list(input_data: str) -> deque[Monkey]:
     """
     Generates a list of monkeys given the input data
     :param input_data: a string with monkey information
     :return: a list of monkey objects
     """
-    monkeys: list[Monkey] = []
+    monkeys = deque()
     my_data: list = input_data.split('Monkey ')
     for monkey in my_data:
         monkey = monkey.strip()
@@ -43,7 +44,7 @@ def gen_monkey_list(input_data: str) -> list[Monkey]:
     return monkeys
 
 
-def inspect(monkey: Monkey, trick) -> None:
+def inspect(monkey: Monkey, trick: int = 0) -> None:
     """
     Changes the monkey's items according to the monkey's operation
     :param monkey: a monkey
@@ -57,7 +58,7 @@ def inspect(monkey: Monkey, trick) -> None:
         monkey.items = [eval(monkey.operation) % trick for old in monkey.items]
 
 
-def throw(monkeys, trick) -> None:
+def throw(monkeys: deque[Monkey], trick: int = 0) -> None:
     """
     Tests divisibility and throws item to the appropriate monkey
     :param monkeys: a list of monkeys
@@ -76,7 +77,7 @@ def throw(monkeys, trick) -> None:
                 monkeys[monkey.if_false_throw_to].items.append(monkey.items.pop(0))
 
 
-def monkey_business(monkeys: list[Monkey]) -> int:
+def monkey_business(monkeys: deque[Monkey]) -> int:
     """
     Calculates the solution for part 1 and 2
     :param monkeys: a list of Monkeys
@@ -90,14 +91,14 @@ def main() -> None:
     input_data: str = get_data(day=11, year=2022)
 
     # Part 1
-    monkeys: list[Monkey] = gen_monkey_list(input_data)
+    monkeys: deque[Monkey] = gen_monkey_list(input_data)
     for r in range(20):
-        throw(monkeys, 0)
+        throw(monkeys)
     print(f'Part 1 solution: {monkey_business(monkeys)}')
 
     # Part 2
-    monkeys: list[Monkey] = gen_monkey_list(input_data)
-    test_nums: list[int, ...] = [m.test_divisible_by for m in monkeys]
+    monkeys: deque[Monkey] = gen_monkey_list(input_data)
+    test_nums: list[int] = [m.test_divisible_by for m in monkeys]
     trick = 1
     for num in test_nums:
         trick *= num
