@@ -3,16 +3,16 @@ from aocd import get_data
 
 def floor_count(input_data: str, part: int = 0) -> int:
     floor = 0
-    for i in enumerate(input_data):
-        if part == 2:
-            if floor < 0:
-                return i[0]
+    for i in enumerate(input_data, 1):
         if i[1] == '(':
             floor += 1
         elif i[1] == ')':
             floor -= 1
         else:
             raise ValueError('Instruction must be either "(" or ")".')
+        if part == 2:
+            if floor < 0:
+                return i[0]
     return floor
 
 
