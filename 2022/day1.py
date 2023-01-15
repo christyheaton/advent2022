@@ -20,12 +20,7 @@ def get_total_top_elves(total_calorie_list: list, num_elves_to_sum: int) -> int:
     """Takes in a list of total calories per elf and a number of elves
     returns the sum of the calorie counts for the inputted number elves
     with the highest calorie counts"""
-    total_calorie_list.sort()
-    top_elves = total_calorie_list[-num_elves_to_sum:]
-    sum_top_elves = 0
-    for elf_cals in top_elves:
-        sum_top_elves += elf_cals
-    return sum_top_elves
+    return sum(sorted(total_calorie_list)[-num_elves_to_sum:])
 
 
 if __name__ == '__main__':
