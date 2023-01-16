@@ -96,14 +96,15 @@ def play_round(game_round: str, game_part: int) -> int:
     return your_score
 
 
-def game_summary(game_input: list, game_part: int) -> list:
+def game_summary(game_input: list, game_part: int) -> int:
     """Takes in list of a full game and an int of the game part logic
-    Returns a list of scores, one for each round"""
-    return [play_round(game_round, game_part) for game_round in game_input]
+    Returns the sum of scores for all rounds"""
+    return sum([play_round(game_round, game_part) for game_round in game_input])
 
 
 if __name__ == '__main__':
     data = get_data(day=2, year=2022).splitlines()
+    print(data)
     print('Your total scores:')
-    print(f'   Part 1: {sum(game_summary(data, 1))}')
-    print(f'   Part 2: {sum(game_summary(data, 2))}')
+    print(f'   Part 1: {game_summary(data, 1)}')
+    print(f'   Part 2: {game_summary(data, 2)}')
