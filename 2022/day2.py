@@ -1,12 +1,14 @@
 import sys
+from enum import Enum
 from aocd import get_data
 
-# Point designations
-ROCK = 1
-PAPER = 2
-SCISSORS = 3
-WIN = 6
-DRAW = 3
+
+class Scores(Enum):
+    Rock = 1
+    Paper = 2
+    Scissors = 3
+    Win = 6
+    Tie = 3
 
 
 def game1(their_play: str, your_play: str) -> int:
@@ -15,25 +17,25 @@ def game1(their_play: str, your_play: str) -> int:
     your_score = 0
 
     if your_play == 'X':
-        your_score += ROCK
+        your_score += Scores.Rock.value
         if their_play == 'A':
-            your_score += DRAW
+            your_score += Scores.Tie.value
         elif their_play == 'C':
-            your_score += WIN
+            your_score += Scores.Win.value
 
     elif your_play == 'Y':
-        your_score += PAPER
+        your_score += Scores.Paper.value
         if their_play == 'B':
-            your_score += DRAW
+            your_score += Scores.Tie.value
         elif their_play == 'A':
-            your_score += WIN
+            your_score += Scores.Win.value
 
     elif your_play == 'Z':
-        your_score += SCISSORS
+        your_score += Scores.Scissors.value
         if their_play == 'C':
-            your_score += DRAW
+            your_score += Scores.Tie.value
         elif their_play == 'B':
-            your_score += WIN
+            your_score += Scores.Win.value
 
     return your_score
 
@@ -45,27 +47,27 @@ def game2(their_play: str, your_play: str) -> int:
 
     if their_play == 'A':
         if your_play == 'X':
-            your_score += SCISSORS
+            your_score += Scores.Scissors.value
         elif your_play == 'Y':
-            your_score += DRAW + ROCK
+            your_score += Scores.Tie.value + Scores.Rock.value
         elif your_play == 'Z':
-            your_score += WIN + PAPER
+            your_score += Scores.Win.value + Scores.Paper.value
 
     elif their_play == 'B':
         if your_play == 'X':
-            your_score += ROCK
+            your_score += Scores.Rock.value
         elif your_play == 'Y':
-            your_score += DRAW + PAPER
+            your_score += Scores.Tie.value + Scores.Paper.value
         elif your_play == 'Z':
-            your_score += WIN + SCISSORS
+            your_score += Scores.Win.value + Scores.Scissors.value
 
     elif their_play == 'C':
         if your_play == 'X':
-            your_score += PAPER
+            your_score += Scores.Paper.value
         elif your_play == 'Y':
-            your_score += DRAW + SCISSORS
+            your_score += Scores.Tie.value + Scores.Scissors.value
         elif your_play == 'Z':
-            your_score += WIN + ROCK
+            your_score += Scores.Win.value + Scores.Rock.value
 
     return your_score
 
