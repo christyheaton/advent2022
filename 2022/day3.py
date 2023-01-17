@@ -21,7 +21,7 @@ def get_badge_total(alphabet: str, contents: list) -> int:
 
 
 if __name__ == '__main__':
-    data = get_data(day=3, year=2022).splitlines()
+    data: list = get_data(day=3, year=2022).splitlines()
     letters: str = ''.join([string.ascii_lowercase, string.ascii_uppercase])
 
     print(f'Part 1: Shared item in rucksack total is {get_item_total(letters, data)}.')
