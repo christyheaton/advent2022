@@ -2,7 +2,7 @@ from aocd import get_data
 import string
 
 
-def get_item_total(contents: list) -> int:
+def get_item_total(alphabet: str, contents: list) -> int:
     total = 0
     for d in contents:
         half = int(len(d) / 2)
@@ -11,7 +11,7 @@ def get_item_total(contents: list) -> int:
     return total
 
 
-def get_badge_total(contents: list) -> int:
+def get_badge_total(alphabet: str, contents: list) -> int:
     group = list(zip(*[iter(contents)] * 3))
     total = 0
     for g in group:
@@ -22,7 +22,7 @@ def get_badge_total(contents: list) -> int:
 
 if __name__ == '__main__':
     data = get_data(day=3, year=2022).splitlines()
-    alphabet = ''.join([string.ascii_lowercase, string.ascii_uppercase])
+    letters: str = ''.join([string.ascii_lowercase, string.ascii_uppercase])
 
-    print(f'Shared item in rucksack total is {get_item_total(data)}')
-    print(f'Badge total is {get_badge_total(data)}')
+    print(f'Part 1: Shared item in rucksack total is {get_item_total(letters, data)}.')
+    print(f'Part 2: Badge total is {get_badge_total(letters, data)}.')
