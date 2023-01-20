@@ -5,7 +5,7 @@ def format_container_data(stacks_data: list) -> dict:
     """Takes in a list of lines from the input data
     outputs a dictionary where the key is the column,
     and value is a list of strings with the column info in order bottom to top"""
-    stacks_dict = {key: [] for key in range(1, 10)}
+    stacks_dict = {key: [] for key in range(1, len(stacks_data)+1)}
     container_info = stacks_data[::-1]
     container_info_split = []
     for cont in container_info:
@@ -22,7 +22,7 @@ def format_container_data(stacks_data: list) -> dict:
     return stacks_dict
 
 
-def perform_instructions(instructions: str, stacks: dict) -> dict:
+def perform_instructions(instructions: str, stacks: dict, part: int) -> dict:
     """Given a set of instructions and a dictionary of stacks,
     perform the instructions and output the modified dictionary of stacks"""
     for i in instructions:
@@ -30,14 +30,21 @@ def perform_instructions(instructions: str, stacks: dict) -> dict:
         count = int(sp[1])
         from_stack = int(sp[3])
         to_stack = int(sp[5])
-        #part 1
-        # for c in range(count):
-        #     stacks[to_stack].append(stacks[from_stack].pop())
-        #part2
-        for item in stacks[from_stack][-count:]:
-            stacks[to_stack].append(item)
-        del stacks[from_stack][len(stacks[from_stack]) - count:]
+        if part == 1:
+            for c in range(count):
+                stacks[to_stack].append(stacks[from_stack].pop())
+        if part == 2:
+            for item in stacks[from_stack][-count:]:
+                stacks[to_stack].append(item)
+            del stacks[from_stack][len(stacks[from_stack]) - count:]
     return stacks
+
+
+def get_message(shuffled_stacks: dict) -> str:
+    message = ''
+    for order in shuffled_stacks.values():
+        message += order[-1][1]
+    return message
 
 
 if __name__ == '__main__':
@@ -46,11 +53,9 @@ if __name__ == '__main__':
     instructions_data = data[10:]
 
     stacks_prelim = format_container_data(stack_data)
-    print(f'Stacks before shuffling: {stacks_prelim}')
-    stacks_shuffled = perform_instructions(instructions_data, stacks_prelim)
-    print(f'Stacks after shuffling: {stacks_shuffled}')
+    stacks_shuffled_pt1 = perform_instructions(instructions_data, stacks_prelim, 1)
+    print(f'Part 1: {get_message(stacks_shuffled_pt1)}')
 
-    message = ''
-    for order in stacks_shuffled.values():
-        message += order[-1][1]
-    print(f'Message: {message}')
+    stacks_prelim = format_container_data(stack_data)
+    stacks_shuffled_pt2 = perform_instructions(instructions_data, stacks_prelim, 2)
+    print(f'Part 2: {get_message(stacks_shuffled_pt2)}')
