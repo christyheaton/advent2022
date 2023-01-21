@@ -31,8 +31,8 @@ class FileSystem:
         self.parse_input()
 
     def parse_input(self) -> None:
-        # This will parse through data in Day7 format and construct a file system
-        # tree based on all the cd and ls commands
+        """ This will parse through data in Day7 format and
+        construct a file system tree based on all the cd and ls commands"""
         commands = self.input.split('$ ')
         size = 0
         for c in commands:
@@ -71,27 +71,22 @@ class FileSystem:
                 raise ValueError(f'Unknown input type: {line}')
 
 
+def get_sum_total_sizes(fs: FileSystem) -> int:
+    return sum([d.get_size_recursive() for d in fs.directories if d.get_size_recursive() <= 100_000])
+
+
+def get_smallest_large_dir(fs: FileSystem) -> int:
+    need_to_delete = fs.directories[0].get_size_recursive() - 70_000_000 + 30_000_000
+    return min([d.get_size_recursive() for d in fs.directories if d.get_size_recursive() > need_to_delete])
+
+
 if __name__ == '__main__':
     data = get_data(day=7, year=2022)
     f = FileSystem(data)
     print()
 
-    # Part 1 Solution:
-    final_list_pt1 = []
-    for dir in f.directories:
-        total_size = dir.get_size_recursive()
-        if total_size <= 100_000:
-            final_list_pt1.append(total_size)
-
     print('Part 1:')
-    print(f'Sum of all directories under 100,000 units is: {sum(final_list_pt1)}.')
-
-    # Part 2 Solution:
-    need_to_delete = f.directories[0].get_size_recursive() - 70_000_000 + 30_000_000
-    big_dirs = []
-    for d in f.directories:
-        if d.get_size_recursive() > need_to_delete:
-            big_dirs.append(d.get_size_recursive())
+    print(f'Sum of all directories under 100,000 units is: {get_sum_total_sizes(f)} units.')
 
     print('Part 2:')
-    print(f'Need to delete the directory of size {min(big_dirs)} units.')
+    print(f'Need to delete the directory of size {get_smallest_large_dir(f)} units.')
