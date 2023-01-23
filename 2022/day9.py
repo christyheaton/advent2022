@@ -13,7 +13,7 @@ class Rope:
         self.head = Point(0, 0)
         self.tail = Point(0, 0)
         self.length = length
-        self.body = [Point(0, 0) for x in range(length)]
+        self.body = [Point(0, 0) for _ in range(length)]
 
     def is_touching(self, a: Point, b: Point) -> bool:
         if abs(a.x - b.x) < 2 and abs(a.y - b.y) < 2:
@@ -72,22 +72,25 @@ class Rope:
             self.move_segment(self.body[segment_i - 1], self.body[segment_i])
 
 
-if __name__ == '__main__':
-    moves = get_data(day=9, year=2022).splitlines()
-
-    # use 2 for part 1 and 10 for part 2
-    r = Rope(2)
+def num_positions_occupied_by_tail(rope: Rope, instructions) -> int:
     visited = set()
     visited.add((0, 0))
 
-    for m in moves:
+    for m in instructions:
         direction, amount = m.split()
         for i in range(int(amount)):
-            r.move_head(direction)
-            r.move_body()
-            visited.add((r.body[-1].x, r.body[-1].y))
-
-    print(f'Number of positions occupied by tail: {len(visited)}')
-
+            rope.move_head(direction)
+            rope.move_body()
+            visited.add((rope.body[-1].x, rope.body[-1].y))
+    return len(visited)
 
 
+def main() -> None:
+    moves = get_data(day=9, year=2022).splitlines()
+
+    print(f'Part 1: {num_positions_occupied_by_tail(Rope(2), moves)}')
+    print(f'Part 2: {num_positions_occupied_by_tail(Rope(10), moves)}')
+
+
+if __name__ == '__main__':
+    main()
