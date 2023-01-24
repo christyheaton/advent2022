@@ -10,26 +10,11 @@ class Cycle:
 
 
 def add_cycle(instruction_line: str, cycles: list, cycle: int, x: int) -> None:
-    """
-    Appends a new cycle to the cycles list
-    :param instruction_line: the current instruction line
-    :param cycles: the list of cycles
-    :param cycle: the current cycle
-    :param x: the value of x in the cycle
-    :return: None
-    """
     return cycles.append(Cycle(count=cycle, x=x, instruction=instruction_line))
 
 
 def draw(x_val: int, draw_position: int) -> int:
-    """
-    Draws a # if the sprite is visible, a . if not.
-    Starts a new line every 40 characters.
-    :param x_val: the x value in the cycle
-    :param draw_position: the current pixel on the line
-    :return: the draw_position to use next time this function is called
-    """
-    if x_val in [draw_position-1, draw_position, draw_position+1]:
+    if x_val in (draw_position-1, draw_position, draw_position+1):
         draw_char = '#'
     else:
         draw_char = '.'
@@ -43,12 +28,6 @@ def draw(x_val: int, draw_position: int) -> int:
 
 
 def generate_cycles(input_data: list) -> list[Cycle]:
-    """
-    Generates a list of cycles from the input_data
-    and draws the output as it goes
-    :param input_data: the provided input data
-    :return: a list of Cycles
-    """
     cycles = []
     cycle = 0
     x = 1
@@ -68,16 +47,21 @@ def generate_cycles(input_data: list) -> list[Cycle]:
     return cycles
 
 
+def sum_signal_strengths(cycle_list: list, intervals: tuple) -> int:
+    total = 0
+    for c in cycle_list:
+        if c.count in intervals:
+            total += (c.count * c.x)
+    return total
+
+
 def main() -> None:
     input_data = get_data(day=10, year=2022).splitlines()
     print('Part 2 answer is:')
     cycles = generate_cycles(input_data)
-    part1 = 0
-    for c in cycles:
-        if c.count in [20, 60, 100, 140, 180, 220]:
-            part1 += (c.count * c.x)
     print()
-    print(f'Part 1 answer is {part1}.')
+    intervals = (20, 60, 100, 140, 180, 220)
+    print(f'Part 1 answer is {sum_signal_strengths(cycles, intervals)}.')
 
 
 if __name__ == '__main__':
