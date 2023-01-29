@@ -1,4 +1,4 @@
-# Advent of Code 2022
+# Advent of Code
 
 - Using `PyCharm` with `Python 3.10`. Occasionally using a `Jupyter Notebook` with `Anaconda`.
 
