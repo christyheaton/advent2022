@@ -1,6 +1,6 @@
 import pytest
 import numpy as np
-from day6 import create_npgrid_pt1, create_npgrid_pt2, parse_instructions, \
+from day06 import create_npgrid_pt1, create_npgrid_pt2, parse_instructions, \
     perform_instructions_pt1, perform_instructions_pt2
 
 

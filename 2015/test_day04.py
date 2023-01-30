@@ -1,5 +1,5 @@
 import pytest
-from day4 import check_md5_hash
+from day04 import check_md5_hash
 
 
 @pytest.mark.parametrize('test_input,expected',

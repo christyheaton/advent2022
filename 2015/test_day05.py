@@ -1,5 +1,5 @@
 import pytest
-from day5 import is_nice_part1, is_nice_part2, count_nice
+from day05 import is_nice_part1, is_nice_part2, count_nice
 
 
 @pytest.mark.parametrize('test_input,expected',
