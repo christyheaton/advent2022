@@ -12,7 +12,7 @@ def circuit_switch(instructions):
     for i in instructions:
         i_sp = i.split()
         if i_sp[0].isdigit():
-            res[i_sp[-1]] = i_sp[0]
+            res[i_sp[-1]] = int(i_sp[0])
         elif 'AND' in i_sp:
             res[i_sp[-1]] = int(res[i_sp[0]]) & int(res[i_sp[2]])
         elif 'OR' in i_sp:
@@ -26,7 +26,7 @@ def circuit_switch(instructions):
     return res
 
 
-if __name__ == '__main__':
+def main() -> None:
     # data = get_data(day=7, year=2015).splitlines()
     data = ['123 -> x',
             '456 -> y',
@@ -39,3 +39,7 @@ if __name__ == '__main__':
     print(data)
     results = circuit_switch(data)
     print(results)
+
+
+if __name__ == '__main__':
+    main()
