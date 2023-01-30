@@ -1,5 +1,5 @@
 import pytest
-from day1 import floor_count
+from day01 import floor_count
 
 
 @pytest.mark.parametrize('test_input,expected',

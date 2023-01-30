@@ -1,5 +1,5 @@
 import pytest
-from day2 import total_wrapping_needed
+from day02 import total_wrapping_needed
 
 
 @pytest.fixture

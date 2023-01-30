@@ -1,5 +1,5 @@
 import pytest
-from day3 import houses_receiving_presents, num_houses
+from day03 import houses_receiving_presents, num_houses
 
 
 @pytest.mark.parametrize('test_input,expected',
