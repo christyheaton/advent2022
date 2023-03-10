@@ -1,16 +1,21 @@
+"""advent of code 2015 day 6 https://adventofcode.com/2015/day/6"""
+
 from aocd import get_data
 import numpy as np
 
 
 def create_npgrid_pt1(size):
+    """create grid for part 1"""
     return np.full((size, size), False)
 
 
 def create_npgrid_pt2(size):
+    """create grid for part 2"""
     return np.zeros((size, size))
 
 
 def parse_instructions(instruction: str) -> tuple:
+    """return parsed instructions"""
     i_sp = instruction.split()
     if i_sp[0] == 'turn':
         i_sp = i_sp[1:]
@@ -21,6 +26,7 @@ def parse_instructions(instruction: str) -> tuple:
 
 
 def perform_instructions_pt1(instructions, npgrid):
+    """perform part 1 instructions"""
     for i in instructions:
         inst, start_x, start_y, end_x, end_y = parse_instructions(i)
         if inst == 'on':
@@ -35,6 +41,7 @@ def perform_instructions_pt1(instructions, npgrid):
 
 
 def perform_instructions_pt2(instructions, npgrid):
+    """perform part 2 instructions"""
     for i in instructions:
         inst, start_x, start_y, end_x, end_y = parse_instructions(i)
         if inst == 'on':
@@ -48,6 +55,7 @@ def perform_instructions_pt2(instructions, npgrid):
 
 
 def main() -> None:
+    """solutions for parts 1 and 2"""
     input_data: list = get_data(day=6, year=2015).splitlines()
     grid1 = create_npgrid_pt1(1_000)
     perform_instructions_pt1(input_data, grid1)

@@ -1,18 +1,22 @@
+"""advent of code 2015 day 7 https://adventofcode.com/2015/day/7"""
+
 from aocd import get_data
 
 
 def not_int(integer):
-    b = f'{integer:016b}'
-    inv_b = ''.join(['1' if i == '0' else '0' for i in b])
+    """return bitwise complement of integer"""
+    bitwise = f'{integer:016b}'
+    inv_b = ''.join(['1' if i == '0' else '0' for i in bitwise])
     return int(inv_b, 2)
 
 
 def circuit_switch(instructions):
+    """return signal"""
     res = {}
     for i in instructions:
         i_sp = i.split()
         if i_sp[0].isdigit():
-            res[i_sp[-1]] = i_sp[0]
+            res[i_sp[-1]] = int(i_sp[0])
         elif 'AND' in i_sp:
             res[i_sp[-1]] = int(res[i_sp[0]]) & int(res[i_sp[2]])
         elif 'OR' in i_sp:
@@ -26,7 +30,8 @@ def circuit_switch(instructions):
     return res
 
 
-if __name__ == '__main__':
+def main() -> None:
+    """start on part 1"""
     # data = get_data(day=7, year=2015).splitlines()
     data = ['123 -> x',
             '456 -> y',
@@ -39,3 +44,7 @@ if __name__ == '__main__':
     print(data)
     results = circuit_switch(data)
     print(results)
+
+
+if __name__ == '__main__':
+    main()
