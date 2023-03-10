@@ -1,4 +1,5 @@
 """advent of code 2015 day 6 https://adventofcode.com/2015/day/6"""
+# pylint: disable=import-error
 
 from aocd import get_data
 import numpy as np

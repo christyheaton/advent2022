@@ -1,5 +1,7 @@
 """tests for day 5"""
 # pylint: disable=redefined-outer-name
+# pylint: disable=import-error
+
 import pytest
 from day05 import is_nice_part1, is_nice_part2, count_nice
 

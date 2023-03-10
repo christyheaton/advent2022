@@ -1,4 +1,5 @@
 """advent of code 2015 day 7 https://adventofcode.com/2015/day/7"""
+# pylint: disable=import-error
 
 from aocd import get_data
 

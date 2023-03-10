@@ -1,5 +1,7 @@
 """tests for day 6"""
 # pylint: disable=redefined-outer-name
+# pylint: disable=import-error
+
 import pytest
 import numpy as np
 from day06 import create_npgrid_pt1, create_npgrid_pt2, parse_instructions, \

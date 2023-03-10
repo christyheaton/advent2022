@@ -1,4 +1,5 @@
 """advent of code 2015 day 2 https://adventofcode.com/2015/day/2"""
+# pylint: disable=import-error
 
 from ast import literal_eval
 from aocd import get_data

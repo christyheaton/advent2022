@@ -1,5 +1,7 @@
 """tests for day 7"""
 # pylint: disable=redefined-outer-name
+# pylint: disable=import-error
+
 import pytest
 from day07 import circuit_switch
 

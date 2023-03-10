@@ -1,5 +1,7 @@
 """tests for day 2"""
 # pylint: disable=redefined-outer-name
+# pylint: disable=import-error
+
 import pytest
 from day02 import total_wrapping_needed
 

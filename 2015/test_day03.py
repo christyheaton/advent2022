@@ -1,4 +1,6 @@
 """tests for day 3"""
+# pylint: disable=import-error
+
 import pytest
 from day03 import houses_receiving_presents, num_houses
 

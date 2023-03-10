@@ -1,4 +1,6 @@
 """tests for day 4"""
+# pylint: disable=import-error
+
 import pytest
 from day04 import check_md5_hash
 

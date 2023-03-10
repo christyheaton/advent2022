@@ -1,4 +1,6 @@
 """tests for day 1"""
+# pylint: disable=import-error
+
 import pytest
 from day01 import floor_count
 
