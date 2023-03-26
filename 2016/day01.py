@@ -21,7 +21,18 @@ class Walker:
         self.facing = 'N'
 
     def turn(self, direction):
-        pass
+        dir_index = DIRECTIONS.index(self.facing)
+        if direction == 'L':
+            if dir_index == 0:
+                new_facing = 'W'
+            else:
+                new_facing = DIRECTIONS[dir_index - 1]
+        else:
+            if dir_index == 3:
+                new_facing = 'S'
+            else:
+                new_facing = DIRECTIONS[dir_index + 1]
+        self.facing = new_facing
 
     def move(self):
         pass
