@@ -29,7 +29,7 @@ class Walker:
                 new_facing = DIRECTIONS[dir_index - 1]
         else:
             if dir_index == 3:
-                new_facing = 'S'
+                new_facing = 'N'
             else:
                 new_facing = DIRECTIONS[dir_index + 1]
         self.facing = new_facing
@@ -45,11 +45,20 @@ class Walker:
             case 'W':
                 self.position.x = self.position.x - distance
 
-            
+
 def main() -> None:
     """start on part 1"""
-    data = get_data(day=1, year=2016)
-    print(data)
+    instructions = get_data(day=1, year=2016).split(', ')
+
+    walker = Walker()
+    for instruction in instructions:
+        turn_direction = instruction[0]
+        distance = int(instruction[1:])
+        walker.turn(turn_direction)
+        walker.move(distance)
+    print(f'Final position: {walker.position}')
+    solution = abs(walker.position.x) + abs(walker.position.y)
+    print(f'Part 1 solution: {solution}')
 
 
 if __name__ == '__main__':
