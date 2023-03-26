@@ -1,6 +1,6 @@
 # Advent of Code
 
-![tests](https://github.com/christyheaton/advent_of_code/blob/main/.github/workflows/python-app.yml/badge.svg)
+![tests](https://github.com/christyheaton/advent_of_code/actions/workflows/python-app.yml/badge.svg)
 
 - Using `PyCharm` with `Python 3.10`. Occasionally using a `Jupyter Notebook` with `Anaconda`.
 
