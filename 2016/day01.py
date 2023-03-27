@@ -8,8 +8,6 @@ from aocd import get_data
 
 DIRECTIONS = ['N', 'E', 'S', 'W']
 
-# TODO: replace with named tuple
-
 
 @dataclass()
 class Point:
@@ -38,7 +36,7 @@ class Walker:
         self.facing = new_facing
 
     def move(self, distance):
-        for i in range(1, distance+1):
+        for i in range(distance):
             match self.facing:
                 case 'N':
                     self.position.y = self.position.y + 1
