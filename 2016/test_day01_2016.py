@@ -2,7 +2,7 @@
 # pylint: disable=import-error
 
 import pytest
-from day01 import Walker
+from day01_2016 import Walker
 
 
 @pytest.mark.parametrize('test_input,expected',
