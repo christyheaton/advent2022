@@ -2,7 +2,6 @@
 # pylint: disable=import-error
 
 import pytest
-import copy
 from day01 import Walker
 
 
@@ -35,4 +34,3 @@ def test_part2(test_input, expected):
     first_duplicate = [x for n, x in enumerate(walker.visited) if x in walker.visited[:n]][0]
     pt2_solution = abs(first_duplicate.x) + abs(first_duplicate.y)
     assert pt2_solution == expected
-
