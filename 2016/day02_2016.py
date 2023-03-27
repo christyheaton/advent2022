@@ -1,5 +1,5 @@
 # pylint: disable=import-error
-"""advent of code 2016 day 1 https://adventofcode.com/2016/day/1"""
+"""advent of code 2016 day 2 https://adventofcode.com/2016/day/2"""
 
 from aocd import get_data
 import numpy as np
@@ -30,14 +30,14 @@ class CodeFinder:
 
 
 def main() -> None:
-    """part 1 start"""
+    """part 1 solution"""
     data = get_data(day=2, year=2016).split('\n')
     result = ''
     code_finder = CodeFinder()
     for inst in data:
         code_finder.execute_instruction_line(inst)
         result = result + code_finder.current_value()
-    print(result)
+    print(f'Part 1 solution: {result}')
 
 
 if __name__ == '__main__':
