@@ -1,10 +1,14 @@
 # pylint: disable=import-error
 """advent of code 2016 day 1 https://adventofcode.com/2016/day/1"""
+import copy
 from dataclasses import dataclass
 from aocd import get_data
+# TODO: add logging
 
 
 DIRECTIONS = ['N', 'E', 'S', 'W']
+
+# TODO: replace with named tuple
 
 
 @dataclass()
@@ -15,10 +19,9 @@ class Point:
 
 class Walker:
     def __init__(self):
-        self.x = 0
-        self.y = 0
         self.position = Point(0, 0)
         self.facing = 'N'
+        self.visited = []
 
     def turn(self, direction):
         dir_index = DIRECTIONS.index(self.facing)
@@ -35,30 +38,33 @@ class Walker:
         self.facing = new_facing
 
     def move(self, distance):
-        match self.facing:
-            case 'N':
-                self.position.y = self.position.y + distance
-            case 'E':
-                self.position.x = self.position.x + distance
-            case 'S':
-                self.position.y = self.position.y - distance
-            case 'W':
-                self.position.x = self.position.x - distance
+        for i in range(1, distance+1):
+            match self.facing:
+                case 'N':
+                    self.position.y = self.position.y + 1
+                case 'E':
+                    self.position.x = self.position.x + 1
+                case 'S':
+                    self.position.y = self.position.y - 1
+                case 'W':
+                    self.position.x = self.position.x - 1
+            self.visited.append(copy.deepcopy(self.position))
 
 
 def main() -> None:
-    """start on part 1"""
+    """part 1 and 2 solutions"""
     instructions = get_data(day=1, year=2016).split(', ')
-
     walker = Walker()
     for instruction in instructions:
         turn_direction = instruction[0]
         distance = int(instruction[1:])
         walker.turn(turn_direction)
         walker.move(distance)
-    print(f'Final position: {walker.position}')
-    solution = abs(walker.position.x) + abs(walker.position.y)
-    print(f'Part 1 solution: {solution}')
+    pt1_solution = abs(walker.position.x) + abs(walker.position.y)
+    print(f'Part 1 solution: {pt1_solution}')
+    first_duplicate = [x for n, x in enumerate(walker.visited) if x in walker.visited[:n]][0]
+    pt2_solution = abs(first_duplicate.x) + abs(first_duplicate.y)
+    print(f'Part 2 solution: {pt2_solution}')
 
 
 if __name__ == '__main__':
