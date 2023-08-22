@@ -10,12 +10,15 @@ class CodeFinder:
         self.part = part
         if part == 1:
             self.num_pad = np.arange(1, 10).reshape(3, 3)
+            self.boundary = 2
         elif part == 2:
             self.num_pad = self.create_num_pad_pt2()
+            self.boundary = 4
         else:
             raise ValueError("Part must be '1' or '2'")
         self.vertical = 1
         self.horizontal = 1
+
 
     @staticmethod
     def create_num_pad_pt2() -> np.array:
@@ -28,35 +31,20 @@ class CodeFinder:
         return num_pad
 
     def execute_instruction_line(self, line: list) -> None:
-        if self.part == 1:
-            for instruction in line:
-                self.move_pt1(instruction)
-        else:
-            for instruction in line:
-                self.move_pt2(instruction)
+        for instruction in line:
+            self.move(instruction)
 
-    def move_pt1(self, direction: str) -> None:
-        if direction == 'U' and self.vertical > 0:
-            self.vertical -= 1
-        elif direction == 'D' and self.vertical < 2:
-            self.vertical += 1
-        elif direction == 'L' and self.horizontal > 0:
-            self.horizontal -= 1
-        elif direction == 'R' and self.horizontal < 2:
-            self.horizontal += 1
-
-
-    def move_pt2(self, direction: str) -> None:
+    def move(self, direction: str) -> None:
         if direction == 'U' and self.vertical > 0:
             if self.num_pad[self.horizontal, self.vertical -1]:
                 self.vertical -= 1
-        elif direction == 'D' and self.vertical < 4:
+        elif direction == 'D' and self.vertical < self.boundary:
             if self.num_pad[self.horizontal, self.vertical +1]:
                 self.vertical += 1
         elif direction == 'L' and self.horizontal > 0:
             if self.num_pad[self.horizontal - 1, self.vertical]:
                 self.horizontal -= 1
-        elif direction == 'R' and self.horizontal < 4:
+        elif direction == 'R' and self.horizontal < self.boundary:
             if self.num_pad[self.horizontal + 1, self.vertical]:
                 self.horizontal += 1
 
