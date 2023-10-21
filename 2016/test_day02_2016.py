@@ -13,9 +13,18 @@ def test_input():
 def test_part1(test_input):
     """test part 1"""
     result = ''
-    code_finder = CodeFinder()
+    code_finder = CodeFinder(1)
     for inst in test_input:
         code_finder.execute_instruction_line(inst)
         result = result + code_finder.current_value()
     assert result == '1985'
 
+
+def test_part2(test_input):
+    """test part 1"""
+    result = ''
+    code_finder = CodeFinder(2)
+    for inst in test_input:
+        code_finder.execute_instruction_line(inst)
+        result = result + code_finder.current_value()
+    assert result == '2CB3'
