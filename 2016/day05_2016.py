@@ -55,10 +55,10 @@ class PasswordFinder:
             hash_result = self.get_md5_hash(count)
             if self.check_interesting(hash_result):
                 hex_result = hash_result.hexdigest()
-                if hex_result[5].isnumeric():
-                    if int(hex_result[5]) < 8:
-                        if not placements.get(hex_result[5]):
-                            placements[hex_result[5]] = hex_result[6]
+                if (hex_result[5].isnumeric()
+                        and int(hex_result[5]) < 8
+                        and not placements.get(hex_result[5])):
+                    placements[hex_result[5]] = hex_result[6]
             count += 1
         for item in sorted(placements.items()):
             password += str(item[1])
